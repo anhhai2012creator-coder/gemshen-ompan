@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Turn-based</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Main Menu / Stage Selection (Hidden during combat) -->
+        <div id="ui-menu" class="screen panel glass">
+            <h1 class="glow-text">DARK FANTASY RPG</h1>
+            <div id="stage-selection">
+                <!-- Stages will be populated here -->
+            </div>
+            <button id="btn-start-game" class="btn primary-btn">START STAGE 1</button>
+        </div>
+
+        <!-- Combat Screen -->
+        <div id="ui-combat" class="screen hidden">
+            <!-- Turn Order / Action Bar -->
+            <div id="action-bar" class="panel glass">
+                <div class="turn-title">TURN ORDER</div>
+                <div id="turn-queue"></div>
+            </div>
+
+            <!-- Battlefield Canvas -->
+            <div id="battlefield-container">
+                <canvas id="battleCanvas" width="1280" height="600"></canvas>
+                <!-- Damage Popups overlay -->
+                <div id="damage-popup-layer"></div>
+            </div>
+
+            <!-- Bottom UI: Character Stats & Skills -->
+            <div id="bottom-ui">
+                <div id="party-stats" class="panel glass">
+                    <!-- Character stats (HP, Energy, Inner Power) populated by JS -->
+                </div>
+
+                <div id="skill-panel" class="panel metal">
+                    <button id="btn-attack" class="skill-btn">
+                        <span class="skill-name">Đánh thường</span>
+                        <span class="skill-cost">Hồi Năng/Nội</span>
+                    </button>
+                    <button id="btn-skill" class="skill-btn">
+                        <span class="skill-name">Kỹ năng</span>
+                        <span class="skill-cost">100 Năng lượng</span>
+                    </button>
+                    <button id="btn-ultimate" class="skill-btn">
+                        <span class="skill-name">Tuyệt kỹ</span>
+                        <span class="skill-cost">30 Nội năng</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Victory/Defeat Screen -->
+        <div id="ui-result" class="screen hidden panel glass">
+            <h1 id="result-title" class="glow-text">VICTORY</h1>
+            <button id="btn-return-menu" class="btn primary-btn">RETURN TO MENU</button>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
