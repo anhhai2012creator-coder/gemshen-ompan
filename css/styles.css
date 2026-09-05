@@ -1,0 +1,329 @@
+/* Dark Fantasy / Anime RPG Theme */
+:root {
+    --bg-color: #0b0c10;
+    --text-color: #c5c6c7;
+    --primary-glow: #66fcf1;
+    --secondary-glow: #45a29e;
+    --hp-color: #ff3b3b;
+    --mp-color: #00d2ff;
+    --inner-color: #ff9900;
+    --glass-bg: rgba(11, 12, 16, 0.7);
+    --glass-border: rgba(102, 252, 241, 0.3);
+    --metal-bg: linear-gradient(135deg, #1f2833 0%, #0b0c10 100%);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    background-color: #111;
+    box-shadow: 0 0 20px var(--primary-glow);
+    overflow: hidden;
+}
+
+/* Background image placeholder */
+#battlefield-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 600px;
+    background: radial-gradient(circle at center, #2a2a35 0%, #0b0c10 100%);
+    z-index: 1;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+#damage-popup-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Screens */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* UI Panels */
+.panel {
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 0 10px rgba(102, 252, 241, 0.2) inset;
+    border-radius: 8px;
+}
+
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(5px);
+}
+
+.metal {
+    background: var(--metal-bg);
+    border: 2px solid #2a3542;
+}
+
+.glow-text {
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
+    text-align: center;
+    margin: 20px;
+}
+
+/* Menu */
+#ui-menu, #ui-result {
+    justify-content: center;
+    align-items: center;
+}
+
+/* Action Bar */
+#action-bar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 1260px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    z-index: 25;
+}
+
+.turn-title {
+    font-weight: bold;
+    color: var(--primary-glow);
+    margin-right: 20px;
+    text-transform: uppercase;
+}
+
+#turn-queue {
+    display: flex;
+    gap: 10px;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.turn-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: white;
+}
+
+.turn-icon.active {
+    border-color: var(--primary-glow);
+    box-shadow: 0 0 10px var(--primary-glow);
+    transform: scale(1.1);
+}
+
+/* Bottom UI */
+#bottom-ui {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    z-index: 25;
+}
+
+#party-stats {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.char-stat-card {
+    flex: 1;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.char-stat-card.active {
+    border-color: var(--primary-glow);
+    box-shadow: 0 0 10px var(--primary-glow) inset;
+}
+
+.char-name {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.bar-container {
+    width: 100%;
+    height: 12px;
+    background-color: #222;
+    border-radius: 6px;
+    margin-top: 4px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #444;
+}
+
+.bar-fill {
+    height: 100%;
+    width: 100%;
+    transition: width 0.3s;
+}
+
+.hp-fill { background-color: var(--hp-color); }
+.mp-fill { background-color: var(--mp-color); }
+.inner-fill { background-color: var(--inner-color); }
+
+.bar-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 9px;
+    text-align: center;
+    line-height: 12px;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+}
+
+/* Skills */
+#skill-panel {
+    width: 400px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+
+.skill-btn {
+    background: #1a1a24;
+    border: 1px solid var(--primary-glow);
+    color: white;
+    width: 110px;
+    height: 80px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.skill-btn:hover:not(:disabled) {
+    background: #2a2a3a;
+    box-shadow: 0 0 15px var(--primary-glow);
+    transform: translateY(-2px);
+}
+
+.skill-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #555;
+}
+
+.skill-name {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.skill-cost {
+    font-size: 11px;
+    color: #aaa;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.2s;
+}
+
+.primary-btn {
+    background: transparent;
+    color: var(--primary-glow);
+    border: 2px solid var(--primary-glow);
+}
+
+.primary-btn:hover {
+    background: var(--primary-glow);
+    color: #000;
+    box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* Damage Popups */
+.dmg-popup {
+    position: absolute;
+    font-weight: bold;
+    font-size: 24px;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+    animation: floatUp 1s forwards ease-out;
+    pointer-events: none;
+}
+.dmg-normal { color: white; }
+.dmg-crit { color: #ffcc00; font-size: 32px; text-shadow: 0 0 10px red; }
+.dmg-heal { color: #00ff00; }
+.dmg-shield { color: #aaaaff; }
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
+    100% { transform: translateY(-50px) scale(1); opacity: 0; }
+}
